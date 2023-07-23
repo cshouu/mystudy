@@ -3,24 +3,24 @@ package token
 type TokenType string
 
 type Token struct {
-	Type TokenType
+	Type    TokenType
 	Literal string
 }
 
-cosnt (
+const (
 	ILLEGAL = "ILLEGAL"
-	EOF = "EOF"
+	EOF     = "EOF"
 
 	//标识符、字面量
 	IDENT = "IDENT"
-	INT = "INT"
+	INT   = "INT"
 
 	//运算符
 	ASSIGN = "="
-	PLUS = "+"
+	PLUS   = "+"
 
 	//分隔符
-	COMMA = ","
+	COMMA     = ","
 	SEMICOLON = ";"
 
 	LPAREN = "("
@@ -30,5 +30,5 @@ cosnt (
 
 	//关键字
 	FUNCTION = "FUNCTION"
-	LET = "LET"
+	LET      = "LET"
 )
