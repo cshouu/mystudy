@@ -41,14 +41,19 @@ func (p *Parser) Errors() []string {
 	return p.errors
 }
 
+// 解析语句
 func (p *Parser) parseStatement() ast.Statement {
 	switch p.curToken.Type {
 	case token.LET:
 		return p.parseLetStatement()
+	case token.RETURN:
+		return p.parseReturnStatement()
 	default:
 		return nil
 	}
 }
+
+// 解析let语句
 func (p *Parser) parseLetStatement() ast.Statement {
 	stmt := &ast.LetStatment{Token: p.curToken}
 	if !p.expectPeek(token.IDENT) {
@@ -65,6 +70,21 @@ func (p *Parser) parseLetStatement() ast.Statement {
 
 	return stmt
 }
+
+// 解析return语句
+func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
+	stmt := &ast.ReturnStatement{Token: p.curToken}
+
+	p.nextToken()
+
+	if !p.curTokenIs(token.SEMICOLON) {
+		p.nextToken()
+	}
+
+	return stmt
+}
+
+// -----------辅助方法--------------
 func (p *Parser) nextToken() {
 	p.curToken = p.peekToken
 	p.peekToken = p.l.NextToken()

@@ -2,20 +2,20 @@ package ast
 
 import "monkey/token"
 
+// ---------接口-----------
 type Node interface {
 	TokenLiteral() string
 }
-
 type Statement interface {
 	Node
 	statementNode()
 }
-
 type Expression interface {
 	Node
 	expressionNode()
 }
 
+// --------类-------------
 type Program struct {
 	Statements []Statement
 }
@@ -26,6 +26,16 @@ func (p *Program) TokenLiteral() string {
 	} else {
 		return ""
 	}
+}
+
+type Identifier struct {
+	Token token.Token
+	Value string
+}
+
+func (i *Identifier) expressionNode() {}
+func (i *Identifier) TokenLiteral() string {
+	return i.Token.Literal
 }
 
 type LetStatment struct {
@@ -39,12 +49,12 @@ func (ls *LetStatment) TokenLiteral() string {
 	return ls.Token.Literal
 }
 
-type Identifier struct {
-	Token token.Token
-	Value string
+type ReturnStatement struct {
+	Token       token.Token
+	ReturnValue Expression
 }
 
-func (i *Identifier) expressionNode() {}
-func (i *Identifier) TokenLiteral() string {
-	return i.Token.Literal
+func (rs *ReturnStatement) statementNode() {}
+func (rs *ReturnStatement) TokenLiteral() string {
+	return rs.Token.Literal
 }
